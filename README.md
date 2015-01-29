@@ -1,0 +1,1 @@
+# lightoj-beginner-problem
