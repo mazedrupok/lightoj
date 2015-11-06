@@ -1,0 +1,71 @@
+#include <iostream>
+#include <cstdio>
+#include <cstring>
+#include <vector>
+#include <queue>
+#include <map>
+#include <algorithm>
+using namespace std;
+struct node {int p; int q;};
+char ara[1005][1005];
+int row, col;
+int Dx[]= {-1, 1, 0, 0};
+int Dy[]= {0, 0, 1, -1};
+int bfs (int x1, int x2, int d1, int d2) {
+   queue <node > qu;
+   bool visited[row][col];
+   for (int i = 0; i < row; i++)
+      memset (visited[i], 0, sizeof (visited[i]));
+   int level[row][col];
+   node u;
+   u.p = x1; u.q = x2;
+   qu.push (u);
+   visited[u.p][u.q] = 1;
+   level[x1][x2] = 0;
+   while (qu.empty() == 0) {
+      u = qu.front(); qu.pop();
+      //printf ("Out: %d %d\n", u.p, u.q);
+      for (int i = 0; i < 4; i++) {
+         node v;
+         v.p = u.p + Dx[i];
+         v.q = u.q + Dy[i];
+         if (!visited[v.p][v.q]  && ara[v.p][v.q] != '#' && ara[v.p][v.q] != 'm') {
+            //printf ("In: %d %d\n", v.p, v.q);
+            visited[v.p][v.q] = 1;
+            level[v.p][v.q] = level[u.p][u.q] + 1;
+            qu.push (v);
+         }
+      }
+   }
+   return level[d1][d2];
+}
+int main ()
+{
+   int tc, k = 0;
+   //freopen ("in.txt", "r", stdin);
+   cin >> tc;
+   while (tc--) {
+      cin >> row >> col;
+      node h, a, b, c;
+      for (int i = 1; i <= row; i++) {
+         for (int j = 1; j <= col; j++) {
+            cin >> ara[i][j];
+            if (ara[i][j] == 'h') {h.p = i; h.q = j;}
+            else if (ara[i][j] == 'a') {a.p = i; a.q = j;}
+            else if (ara[i][j] == 'b') {b.p = i; b.q = j;}
+            else if (ara[i][j] == 'c') {c.p = i; c.q = j;}
+         }
+      }
+      int p , q, r;
+     p = bfs (a.p, a.q,  h.p, h.q);
+     q = bfs (b.p, b.q,  h.p, h.q);
+     r = bfs (c.p, c.q,  h.p, h.q);
+      int m = p;
+      if (m < q) m = q;
+      if (m < r) m = r;
+      printf ("Case %d: %d\n", ++k, m);
+      for (int i = 0; i < 1000; i++) memset (ara[i], ' ', sizeof (ara[i]));
+   }
+   return 0;
+}
+
