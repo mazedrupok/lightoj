@@ -1,0 +1,41 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define black 1
+#define white 2
+int main ()
+{
+    int tc, k = 0, n, u, v, mx;
+    scanf (" %d", &tc);
+    while (tc--) {
+        scanf (" %d", &n);
+        mx = 0;
+        vector <int > g[20010];
+        int color[20010] = {0};
+        while (n--) {
+            scanf (" %d %d", &u, &v);
+            g[u].push_back (v);
+            g[v].push_back (u);
+        }
+        for (int i = 1; i < 20005; i++) { //Here all nodes be assumed not connected..
+            if (!g[i].empty() && color[i] == 0) {
+                queue <int > q; //BFS start from here..
+                int bl = 0, wh = 0;
+                q.push (i); color[i] = black; bl++;
+                while (!q.empty()) {
+                    int u = q.front(); q.pop();
+                    for (int j = 0; j < g[u].size(); j++) {
+                        int v = g[u][j];
+                        if (color[v] == 0) {
+                            q.push (v);
+                            if (color[u] == black) {color[v] = white; wh++;}
+                            else if (color[u] == white) {color[v] = black; bl++;}
+                        }
+                    }
+                }
+                mx += max (bl, wh);
+            }
+        }
+        printf ("Case %d: %d\n", ++k, mx);
+    }
+    return 0;
+}
