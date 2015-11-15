@@ -1,0 +1,69 @@
+#include <iostream>
+#include <cstdio>
+#include <cstring>
+#include <cstdlib>
+#include <cctype>
+using namespace std;
+struct node {
+	bool endmark;
+	node *next[10];
+	node() {
+		endmark=false;
+		for(int i=0;i<10;i++) next[i]=NULL;
+	}
+};
+void insert(char *str,int len, node *curr) {
+	//node *curr=root;
+	for(int i=0;i<len;i++) {
+		int id=str[i]-'0';
+		if(curr->next[id]==NULL)
+			curr->next[id]=new node();
+		curr=curr->next[id];
+	}
+	curr->endmark=true;
+}
+bool search(char *str,int len, node *curr) {
+	//node *curr=root;
+	for(int i=0;i<len;i++) {
+		int id=str[i]-'0';
+		if(curr->next[id]==NULL) return false;
+		curr=curr->next[id];
+	}
+	if (curr->endmark) {
+        for (int i = 0; i < 10; i++) {
+            if (curr->next[i]) return true;
+        }
+	}
+	return false;
+}
+void del(node *cur) {
+    for(int i=0;i<10;i++)
+        if(cur->next[i])
+            del(cur->next[i]);
+    //if (&cur == &root) return;
+    delete(cur);
+}
+int main()
+{
+	int num_word, tc, k = 0, i, j;
+	cin >> tc;
+	while (tc--) {
+        node *root = new node();
+        char str[10010][15];
+        cin>>num_word;
+        for(i = 0; i < num_word; i++) {
+            scanf(" %s", str[i]);
+            insert(str[i], strlen(str[i]), root);
+        }
+        int t = 0;
+        for(i = 0; i < num_word; i++) {
+            if(search(str[i], strlen(str[i]), root)) {
+                printf ("Case %d: NO\n", ++k);
+                t = 1; break;
+            }
+        }
+        if (t == 0) printf ("Case %d: YES\n", ++k);
+        del(root);
+	}
+	return 0;
+}
