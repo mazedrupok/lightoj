@@ -1,1 +1,3 @@
-# lightoj-beginner-problem
+# lightoj-problem-Solution
+  Dont copy paste
+  Happy Coding.. :) 
