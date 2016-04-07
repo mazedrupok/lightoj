@@ -23,6 +23,7 @@ int mst(int n)
 	{
 		int u=find(e[i].u);
 		int v=find(e[i].v);
+		
 		if(u!=v)
 		{
 			pr[u]=v;
