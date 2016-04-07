@@ -8,6 +8,7 @@ struct edge
 		return w < p.w;
 	}
 };
+
 int pr[105];
 vector<edge>e;
 int find(int r)
