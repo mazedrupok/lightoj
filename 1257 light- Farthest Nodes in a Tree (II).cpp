@@ -5,8 +5,7 @@
    FB id:  www.facebook.com/mazedrupok
    github: www.github.com/mazedrupok
 
-   Catagory: Graph (Minimum Vertex Cover)
-   Comment:  MVC by using DP technique.
+   Catagory: Graph, Farthest Node determining
 
 */
 #include <bits/stdc++.h>
