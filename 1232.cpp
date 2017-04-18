@@ -24,3 +24,16 @@ int main ()
 
     return 0;
 }
+
+//recursive takes 2 sec... So not possible :p
+int fun1 (int k, int pos) {
+    if (k == 0) return 1;
+    if (k < 0) return 0;
+    //No need to memorize :)
+    int cnt = 0;
+    for (int i = pos; i < n; i++) {
+        cnt += fun (k - ara[i], i);
+        cnt %= mod;
+    }
+    return cnt;
+}
