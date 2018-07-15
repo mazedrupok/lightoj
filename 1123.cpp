@@ -6,21 +6,15 @@ using namespace std;
 int pr[MAXN], rank[MAXN];
 set <pair<int, pair<int,int> > > e;
 
-int find(int r)
-{
-    if (pr[r] == r) return r;
-    int root = find (pr[r]);
-    pr[r] = root; //path compression
-    return root;
+int find(int x){
+    return pr[x] = (pr[x] == x ? x : find(pr[x]));
 }
 void unionByRank (int p, int q) {
     p = find (p);
     q = find (q);
-    if (p != q) {
-        if (rank[p] < rank[q]) {pr[p] = q; pr[q] = q;}
-        else                {pr[p] = p; pr[q] = p;}
-        if (rank[p] == rank[q]) rank[p]++;
-    }
+    if (rank[p] < rank[q]) pr[p] = q;
+    else pr[q] = p;
+    if (rank[p] == rank[q]) rank[p]++;
 }
 int mst (int n) {
     for (int i = 1; i <= n; i++) {pr[i] = i; rank[i] = 0;}
